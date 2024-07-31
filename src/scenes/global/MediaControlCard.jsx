@@ -18,9 +18,8 @@ export default function MediaControlCard({
     <Card
       sx={{
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "center",
-        width: "100%",
+        width: "320px",
         height: "100px",
         p: 2,
         mr: 5,
