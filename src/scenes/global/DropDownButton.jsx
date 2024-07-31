@@ -55,12 +55,12 @@ function DropDownButton({ buttonText, menuItems }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
+    console.log(event.currentTarget, "target");
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
     <>
       <Button
@@ -116,7 +116,6 @@ function DropDownButton({ buttonText, menuItems }) {
               {item.icon}
               {item.text}
             </MenuItem>
-            {item.divider && <Divider sx={{ my: 0.5 }} />}
           </React.Fragment>
         ))}
       </StyledMenu>

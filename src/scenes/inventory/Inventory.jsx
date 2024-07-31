@@ -34,8 +34,12 @@ import { forwardRef } from "react";
 import { ArrowDownward, ArrowUpward, Search } from "@mui/icons-material";
 import CustomPagination from "../global/CustomPagination";
 import AddItemModal from "./AddItemModal";
-import * as Yup from "yup";
-
+import UpdateProductStock from "../../assets/Update Stock.png";
+import StockTransfer from "../../assets/Stock Transfer.png";
+import ItemCategory from "../../assets/Categories.png";
+import UpdatedProductModal from "./UpdateProductModal";
+import StockTransferModal from "./StockTransferModal";
+import ItemCategoryModal from "./ItemCategoryModal";
 const CustomSortArrow = ({ direction }) => (
   <Box sx={{ display: "flex", alignItems: "center" }}>
     {direction === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
@@ -63,6 +67,9 @@ const Inventory = () => {
     "status",
   ]);
   const [open, setOpen] = React.useState(false);
+  const [updatedProductOpen, setUpdatedProductOpen] = React.useState(false);
+  const [stockTransferOpen, setStockTransferOpen] = React.useState(false);
+  const [ItemCategoryOpen, setItemCategoryOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -157,25 +164,106 @@ const Inventory = () => {
 
   const menuItems = [
     {
-      text: "Edit",
-      icon: <EditIcon />,
-      action: () => console.log("Edit clicked"),
+      text: (
+        <Box>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              fontWeight: "600",
+              fontFamily: "montserrat",
+              color: "#333333",
+            }}
+          >
+            Update Product Stock
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "10px",
+              fontWeight: "300",
+              fontFamily: "montserrat",
+              color: "#333333",
+            }}
+          >
+            Add or reduce item quantity in bulk
+          </Typography>
+        </Box>
+      ),
+      icon: (
+        <img
+          src={UpdateProductStock}
+          alt="Update Product Stock"
+          style={{ width: 32, height: 32, marginRight: 5 }}
+        />
+      ),
+      action: () => setUpdatedProductOpen(true),
     },
     {
-      text: "Duplicate",
-      icon: <FileCopyIcon />,
-      action: () => console.log("Duplicate clicked"),
+      text: (
+        <Box>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              fontWeight: "600",
+              fontFamily: "montserrat",
+              color: "#333333",
+            }}
+          >
+            Stock Transfer
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "10px",
+              fontWeight: "300",
+              fontFamily: "montserrat",
+              color: "#333333",
+            }}
+          >
+            Transfer your stock between stores
+          </Typography>
+        </Box>
+      ),
+      icon: (
+        <img
+          src={StockTransfer}
+          alt=" Stock Transfer"
+          style={{ width: 32, height: 32, marginRight: 5 }}
+        />
+      ),
+      action: () => setStockTransferOpen(true),
     },
-    { divider: true },
     {
-      text: "Archive",
-      icon: <ArchiveIcon />,
-      action: () => console.log("Archive clicked"),
-    },
-    {
-      text: "More",
-      icon: <MoreHorizIcon />,
-      action: () => console.log("More clicked"),
+      text: (
+        <Box>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              fontWeight: "600",
+              fontFamily: "montserrat",
+              color: "#333333",
+            }}
+          >
+            Item Categories (Add/Edit)
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "10px",
+              fontWeight: "300",
+              fontFamily: "montserrat",
+              color: "#333333",
+            }}
+          >
+            Create multiple categories for your items
+          </Typography>
+        </Box>
+      ),
+      icon: (
+        <img
+          src={ItemCategory}
+          alt="Item Categories"
+          style={{ width: 32, height: 32, marginRight: 5 }}
+        />
+      ),
+      action: () => setItemCategoryOpen(true),
     },
   ];
 
@@ -482,6 +570,25 @@ const Inventory = () => {
           open={open}
           handleClose={handleClose}
           addInventoryData={addInventoryData}
+        />
+      )}
+      {updatedProductOpen && (
+        <UpdatedProductModal
+          open={updatedProductOpen}
+          handleClose={() => setUpdatedProductOpen(false)}
+          addInventoryData={addInventoryData}
+        />
+      )}
+      {stockTransferOpen && (
+        <StockTransferModal
+          open={stockTransferOpen}
+          handleClose={() => setStockTransferOpen(false)}
+        />
+      )}
+      {ItemCategoryOpen && (
+        <ItemCategoryModal
+          open={ItemCategoryOpen}
+          handleClose={() => setItemCategoryOpen(false)}
         />
       )}
     </Box>
