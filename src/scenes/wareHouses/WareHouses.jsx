@@ -15,8 +15,10 @@ import {
 import StockLogo from "../../assets/Stock Value.png";
 import Reorder from "../../assets/Reorder.png";
 import OutOfStock from "../../assets/Out of stock.png";
+import { RiEditLine } from "react-icons/ri";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 // Define an array of data for the cards
-
+import AddWareHouseModal from "./AddWareHouseModal";
 import DropDownButton from "../global/DropDownButton";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
@@ -34,9 +36,10 @@ import CustomPagination from "../global/CustomPagination";
 import UpdateProductStock from "../../assets/Update Stock.png";
 import StockTransfer from "../../assets/Stock Transfer.png";
 import ItemCategory from "../../assets/Categories.png";
-
+import { LuEye } from "react-icons/lu";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { render } from "@testing-library/react";
 
 const CustomSortArrow = ({ direction }) => (
   <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -79,9 +82,6 @@ const footerStyle = {
 
 function WareHouses() {
   const [open, setOpen] = React.useState(false);
-  const [updatedProductOpen, setUpdatedProductOpen] = React.useState(false);
-  const [stockTransferOpen, setStockTransferOpen] = React.useState(false);
-  const [ItemCategoryOpen, setItemCategoryOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [selectedColumns, setSelectedColumns] = useState([
@@ -98,215 +98,39 @@ function WareHouses() {
   ]);
   const [tableData, setTableData] = useState([
     {
-      itemCode: "A001",
-      itemName: "Product A",
-      category: "Electronics",
-      currentStockLevel: 150,
-      recorderStockLevel: 50,
-      uom: "pcs",
-      location: "A1",
-      batchLot: "B123",
-      expiryDate: "2025-06-30",
-      status: "In Stock",
+      name: "Warehouse A",
+      location: "New York",
+      address: "123 Main St, New York, NY 10001",
+      description: "Main warehouse in New York",
     },
     {
-      itemCode: "B002",
-      itemName: "Product B",
-      category: "Electronics",
-      currentStockLevel: 75,
-      recorderStockLevel: 30,
-      uom: "pcs",
-      location: "B2",
-      batchLot: "C456",
-      expiryDate: "2024-12-15",
-      status: "Low",
+      name: "Warehouse B",
+      location: "Los Angeles",
+      address: "456 Elm St, Los Angeles, CA 90001",
+      description: "Secondary warehouse in Los Angeles",
     },
     {
-      itemCode: "C003",
-      itemName: "Product C",
-      category: "Home Goods",
-      currentStockLevel: 200,
-      recorderStockLevel: 100,
-      uom: "pcs",
-      location: "C3",
-      batchLot: "D789",
-      expiryDate: "2026-03-20",
-      status: "In Stock",
+      name: "Warehouse C",
+      location: "Chicago",
+      address: "789 Oak St, Chicago, IL 60601",
+      description: "Warehouse located in Chicago",
     },
     {
-      itemCode: "D004",
-      itemName: "Product D",
-      category: "Tools",
-      currentStockLevel: 50,
-      recorderStockLevel: 20,
-      uom: "pcs",
-      location: "D4",
-      batchLot: "E012",
-      expiryDate: "2024-11-05",
-      status: "Low",
+      name: "Warehouse D",
+      location: "Houston",
+      address: "101 Pine St, Houston, TX 77001",
+      description: "Warehouse located in Houston",
     },
     {
-      itemCode: "E005",
-      itemName: "Product E",
-      category: "Accessories",
-      currentStockLevel: 120,
-      recorderStockLevel: 60,
-      uom: "pcs",
-      location: "E5",
-      batchLot: "F345",
-      expiryDate: "2025-08-25",
-      status: "In Stock",
-    },
-    {
-      itemCode: "F006",
-      itemName: "Product F",
-      category: "Electronics",
-      currentStockLevel: 90,
-      recorderStockLevel: 40,
-      uom: "pcs",
-      location: "F6",
-      batchLot: "G678",
-      expiryDate: "2024-09-30",
-      status: "Low",
+      name: "Warehouse E",
+      location: "Phoenix",
+      address: "202 Birch St, Phoenix, AZ 85001",
+      description: "Warehouse located in Phoenix",
     },
   ]);
   console.log(tableData, "tableData");
   const addInventoryData = (data) => {
     setTableData([...tableData, data]);
-  };
-  const menuItems = [
-    {
-      text: (
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: "600",
-              fontFamily: "montserrat",
-              color: "#333333",
-            }}
-          >
-            Update Product Stock
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "10px",
-              fontWeight: "300",
-              fontFamily: "montserrat",
-              color: "#333333",
-            }}
-          >
-            Add or reduce item quantity in bulk
-          </Typography>
-        </Box>
-      ),
-      icon: (
-        <img
-          src={UpdateProductStock}
-          alt="Update Product Stock"
-          style={{ width: 32, height: 32, marginRight: 5 }}
-        />
-      ),
-      action: () => setUpdatedProductOpen(true),
-    },
-    {
-      text: (
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: "600",
-              fontFamily: "montserrat",
-              color: "#333333",
-            }}
-          >
-            Stock Transfer
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "10px",
-              fontWeight: "300",
-              fontFamily: "montserrat",
-              color: "#333333",
-            }}
-          >
-            Transfer your stock between stores
-          </Typography>
-        </Box>
-      ),
-      icon: (
-        <img
-          src={StockTransfer}
-          alt=" Stock Transfer"
-          style={{ width: 32, height: 32, marginRight: 5 }}
-        />
-      ),
-      action: () => setStockTransferOpen(true),
-    },
-    {
-      text: (
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: "600",
-              fontFamily: "montserrat",
-              color: "#333333",
-            }}
-          >
-            Item Categories (Add/Edit)
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "10px",
-              fontWeight: "300",
-              fontFamily: "montserrat",
-              color: "#333333",
-            }}
-          >
-            Create multiple categories for your items
-          </Typography>
-        </Box>
-      ),
-      icon: (
-        <img
-          src={ItemCategory}
-          alt="Item Categories"
-          style={{ width: 32, height: 32, marginRight: 5 }}
-        />
-      ),
-      action: () => setItemCategoryOpen(true),
-    },
-  ];
-
-  const selectOptions = {
-    category: ["All", "Electronics", "Home Goods", "Tools", "Accessories"],
-    supplier: [
-      "All",
-      "Abstergo Ltd.",
-      "Barone LLC.",
-      "Biffco Enterprises Ltd.",
-      "Caterpillar Inc.",
-      "Dell Corp.",
-    ],
-    location: ["All", "A1", "B2", "C3", "D4", "E5", "F6"],
-    status: ["All", "In Stock", "Low"],
-    columns: [
-      "itemCode",
-      "itemName",
-      "category",
-      "currentStockLevel",
-      "recorderStockLevel",
-      "uom",
-      "location",
-      "batchLot",
-      "expiryDate",
-      "status",
-    ],
-  };
-
-  const handleColumnChange = (event) => {
-    setSelectedColumns(event.target.value);
   };
 
   // Custom icons
@@ -317,119 +141,31 @@ function WareHouses() {
     // Add other icons as needed
   };
 
-  const renderSelect = (label, options, value = ["All"], onChange) => {
-    // Ensure "All" is included as an option
-    const updatedOptions = [...options];
-    return (
-      <Box sx={{ width: "15%", marginRight: "10px", mb: 2 }}>
-        <FormLabel
-          sx={{
-            ml: 1,
-            fontFamily: getFontFamily("montserrat"),
-            color: "#333333",
-          }}
-        >
-          {label}
-        </FormLabel>
-        <FormControl
-          fullWidth
-          sx={{
-            height: 40,
-            backgroundColor: "white",
-            borderRadius: 2,
-          }}
-        >
-          {/* <InputLabel>{label}</InputLabel> */}
-          <Select
-            multiple={label === "Show/Hide Columns"}
-            value={value}
-            onChange={onChange}
-            renderValue={(selected) => {
-              if (Array.isArray(selected) && selected.length === 0) {
-                return "All"; // Display "All" if nothing is selected
-              }
-              return Array.isArray(selected) ? selected.join(", ") : selected;
-            }}
-            sx={{
-              borderRadius: 2,
-              height: "100%",
-              "& .MuiOutlinedInput-root": { borderRadius: 2 },
-            }}
-          >
-            {updatedOptions.map((option) => (
-              <MenuItem key={option} value={option}>
-                {label === "Show/Hide Columns" && option !== "All" && (
-                  <Checkbox checked={value.indexOf(option) > -1} />
-                )}
-                <ListItemText primary={option} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-    );
-  };
-
   const columns = [
     {
-      title: "Item Code",
-      field: "itemCode",
-      filtering: true,
+      title: "Name",
+      field: "name",
       render: (rowData) => (
-        <div style={{ paddingRight: "16px" }}>{rowData.itemCode}</div>
+        <Link
+          to={`/warehouses/${rowData.name}`}
+          style={{ textDecoration: "none", color: "#6B54C8" }}
+        >
+          {rowData.name}
+          <FaExternalLinkAlt color="#6B54C8" style={{ marginLeft: "10px" }} />
+        </Link>
       ),
     },
     {
-      title: "Item Name",
-      field: "itemName",
-      filtering: true,
+      title: "Location",
+      field: "location",
+    },
+    { title: "Address", field: "address" },
 
-      render: (rowData) => (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            style={{
-              color: "#6B54C8",
-              fontFamily: getFontFamily("montserrat"),
-            }}
-            // to={`/inventory/${rowData.itemCode}`}
-          >
-            {rowData.itemName}
-            <FaExternalLinkAlt color="#6B54C8" style={{ marginLeft: "10px" }} />
-          </Typography>
-        </Box>
-      ),
-    },
-    { title: "Category", field: "category", filtering: true },
     {
-      title: "Current Stk. Level",
-      field: "currentStockLevel",
-      sorting: true,
-      filtering: false,
+      title: "Description",
+      field: "description",
     },
-    {
-      title: "Reorder Stk. Lvl.",
-      field: "reorderStockLevel",
-      sorting: true,
-      filtering: false,
-    },
-    { title: "UOM", field: "uom", sorting: true, filtering: false },
-    { title: "Loc.", field: "location", sorting: true, filtering: false },
-    {
-      title: "Batch/Lot #",
-      field: "batchLot",
-      sorting: true,
-      filtering: false,
-    },
-    {
-      title: "Expiry Date",
-      field: "expiryDate",
-      sorting: true,
-      filtering: false,
-    },
-    { title: "Status", field: "status", filtering: false },
-  ]
-    .filter((column) => selectedColumns.includes(column.field))
-    .map((column) => ({ ...column, sortable: column.sorting !== false }));
+  ];
 
   const finalColumns = [
     ...columns,
@@ -441,17 +177,26 @@ function WareHouses() {
           <Button
             onClick={() => alert(`Edit ${rowData.itemName}`)}
             variant="outlined"
-            color="primary"
+            sx={{
+              border: "none",
+              ":hover": {
+                border: "none",
+              },
+            }}
           >
-            Edit
+            <RiEditLine color="#E8B931" size={24} />
           </Button>
           <Button
+            sx={{
+              border: "none",
+              ":hover": {
+                border: "none",
+              },
+            }}
             onClick={() => alert(`Delete ${rowData.itemName}`)}
             variant="outlined"
-            color="secondary"
-            sx={{ ml: 1 }}
           >
-            Delete
+            <LuEye size={24} color="6B54C8" />
           </Button>
         </Box>
       ),
@@ -463,28 +208,43 @@ function WareHouses() {
         display: "flex",
         flexWrap: "wrap",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
-        mr: 20,
+        width: "100%",
       }}
     >
-      <Box>
+      <Box sx={{ width: "100%", m: 5 }}>
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             m: 2,
+            width: "100%",
           }}
         >
-          <Typography
-            variant="h6"
-            fontSize={"24px"}
-            fontWeight={700}
-            fontFamily={getFontFamily("montserrat")}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            Stock Movement
-          </Typography>
+            <Typography
+              variant="h6"
+              fontSize={"24px"}
+              fontWeight={700}
+              fontFamily={getFontFamily("montserrat")}
+              mr={1}
+            >
+              Warehouses
+            </Typography>
+            <IoIosInformationCircleOutline size={20} />
+          </Box>
+
+          <Button variant="contained" onClick={handleOpen}>
+            Add Warehouse
+          </Button>
         </Box>
         {/* cards */}
         <Card
@@ -497,15 +257,6 @@ function WareHouses() {
             width: "100%",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              marginBottom: "20px",
-            }}
-          >
-            {renderSelect("Category", selectOptions.category)}
-            {renderSelect("Supplier", selectOptions.supplier)}
-          </Box>
           <Box sx={{ borderRadius: 50, width: "100%" }}>
             <MaterialTable
               title="" // Remove table title
@@ -542,6 +293,13 @@ function WareHouses() {
           </Box>
         </Card>
       </Box>
+      {open && (
+        <AddWareHouseModal
+          open={open}
+          handleClose={handleClose}
+          addInventoryData={addInventoryData}
+        />
+      )}
     </Box>
   );
 }
