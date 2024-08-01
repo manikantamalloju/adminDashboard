@@ -19,10 +19,10 @@ export default function MediaControlCard({
       sx={{
         display: "flex",
         alignItems: "center",
-        width: "320px",
+        // width: "320px",
         height: "100px",
-        p: 2,
-        mr: 5,
+        // p: 2,
+        // mr: 5,
         backgroundColor: "#FFFFFF",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add box shadow
         borderRadius: 4, // Optional: Add border radius for rounded corners

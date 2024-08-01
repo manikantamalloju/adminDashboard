@@ -33,7 +33,7 @@ const Inventory = () => {
   // Add the actions column as the last column
 
   return (
-    <Box p={4}>
+    <Box p={4} width={"auto"}>
       {/* tabs */}
       <CustomTabs tabs={tabs} defaultIndex={0} />
       {/* heading */}

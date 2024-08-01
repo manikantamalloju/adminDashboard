@@ -470,6 +470,7 @@ function ItemMaster() {
         justifyContent: "space-between",
         alignItems: "center",
         mr: 20,
+        width: "100%",
       }}
     >
       {cardData.map((item, index) => (
