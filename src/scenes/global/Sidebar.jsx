@@ -6,6 +6,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -107,7 +108,13 @@ const Sidebar = () => {
         <Menu iconShape="square">
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+            icon={
+              isCollapsed ? (
+                <GiHamburgerMenu color="black" size={40} />
+              ) : (
+                <GiHamburgerMenu color="black" size={40} />
+              )
+            }
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
@@ -115,7 +122,11 @@ const Sidebar = () => {
           >
             {!isCollapsed && (
               <Box display="flex" alignItems="center">
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <IconButton
+                  color="red"
+                  size="medium"
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                >
                   <MenuOutlinedIcon />
                 </IconButton>
 
